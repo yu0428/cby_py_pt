@@ -4,8 +4,8 @@ __author__ = 'chenbingyu'
 
 #  Generate the corresponding page according to the "target_page"
 #  parameter in the query string.
-#  For example,the url,/cgi-bin/ViewManage.py?target_page=login,
-#  will make ViewManage.py generate a login page.
+#  For example,the url,/cgi-bin/targetManage.py?target_page=login,
+#  will make targetManage.py generate a login page.
 
 import cgi
 import cgitb
