@@ -19,5 +19,5 @@ class DataManager:
     def name_not_exist(self, name=""):
         return True
 
-    def add(self, name="", password=""):
-        pass
+    def add(self, username="", firs=""):
+        return True

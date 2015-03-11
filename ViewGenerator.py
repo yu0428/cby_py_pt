@@ -61,10 +61,12 @@ class ViewGenerator:  # Response for generating user interface files(html file).
         print("Content-Type: text/html\n")
         print(self.htmlFile % (login_form, message, ""))
 
-    def register_page(self):
+    def register_page(self,message=""):
         #  Generate a "Register page"
         register_form = """
             <form method="post" action="/cgi-bin/register.py">
+                White spaces at the beginning or in the end will be ignored.
+                <br>
                 Name: <input type="text" name="name">
                 <br>
                 Password:<input type="password" name="pass_first">
@@ -76,7 +78,7 @@ class ViewGenerator:  # Response for generating user interface files(html file).
             </form>
         """
         print("Content-Type: text/html\n")
-        print(self.htmlFile % (register_form, "", ""))
+        print(self.htmlFile % (register_form, message, ""))
 
     def no_page(self):
         print("Content-Type: text/html\n")
