@@ -13,5 +13,11 @@ class DataManager:
     def __init__(self):
         pass
 
-    def namepass_correct(self, name, password):
+    def namepass_correct(self, name="", password=""):
         return True
+
+    def name_not_exist(self, name=""):
+        return True
+
+    def add(self, name="", password=""):
+        pass
