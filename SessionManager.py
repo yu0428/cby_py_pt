@@ -18,9 +18,11 @@ class SessionManager:
         pass
 
     def logged(self):
+
         # Return true if user already logged in.
         cookie = Cookie.SimpleCookie()
         cookie_string = os.environ.get("HTTP_COOKIE")
+
         if cookie_string:
             return True
         return False

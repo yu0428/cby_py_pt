@@ -2,8 +2,11 @@
 
 __author__ = 'chenbingyu'
 
+#  Class ViewGenerator responsible for generating "login","register",
+#  "Upload Image","Check Image" and so on pages.
 
-class ViewGenerator:  # Response for generating user interface files(html file).
+class ViewGenerator:
+    # Response for generating user interface files(html file).
     def __init__(self):
         #  login,register,logout,upload image,check image
         self.htmlFile = """
@@ -15,7 +18,11 @@ class ViewGenerator:  # Response for generating user interface files(html file).
                 </head>
                 <body>
                     %s
+                    <br/>
                     %s
+                    <br/>
+                    %s
+                    <br/>
                     %s
                 </body>
             </html>
@@ -39,12 +46,12 @@ class ViewGenerator:  # Response for generating user interface files(html file).
     def welcome_page(self):
         #  Generate a html page containing "Login" or "Register" links.
         print("Content-Type: text/html\n")
-        print(self.htmlFile % (self.login, self.register, ""))
+        print(self.htmlFile % (self.login, self.register, "", ""))
 
-    def operate_page(self):
+    def operate_page(self, message=""):
         # Generate a html page containing "Logout","Upload Image" or "Check Image" links.
         print("Content-Type: text/html\n")
-        print(self.htmlFile % (self.logout, self.uploadImage, self.checkImage))
+        print(self.htmlFile % (message, self.logout, self.uploadImage, self.checkImage))
 
     def login_page(self, message=""):
         # Generate a "Login"
@@ -59,9 +66,9 @@ class ViewGenerator:  # Response for generating user interface files(html file).
             </form>
         """
         print("Content-Type: text/html\n")
-        print(self.htmlFile % (login_form, message, ""))
+        print(self.htmlFile % (login_form, message, "", ""))
 
-    def register_page(self,message=""):
+    def register_page(self, message=""):
         #  Generate a "Register page"
         register_form = """
             <form method="post" action="/cgi-bin/register.py">
@@ -69,21 +76,40 @@ class ViewGenerator:  # Response for generating user interface files(html file).
                 <br>
                 Name: <input type="text" name="name">
                 <br>
-                Password:<input type="password" name="pass_first">
+                Password:<input type="password" name="first_pass">
                 <br>
-                Password again:<input type="password" name="pass_second">
+                Password again:<input type="password" name="second_pass">
                 <br>
                 <input type="submit" value="Submit">
                 <input type="reset" value="Reset">
             </form>
         """
         print("Content-Type: text/html\n")
-        print(self.htmlFile % (register_form, message, ""))
+        print(self.htmlFile % (register_form, message, "", ""))
+
+    def uploadImage_page(self, message=""):
+        upload_form = """
+            <form action="/cgi-bin/uploadimage.py" method="post"
+                enctype="multipart/form-data" name="upload_form">
+                <label>Upload an image(.jpeg for now).</label>
+                <br/>
+                <input name="imgfile" type="file" accept="image/jpeg"/>
+                <br/>
+                <input name="upload" type="submit"/>
+                <br/>
+                <input name="reset" type="reset"/>
+            </form>
+        """
+        print("Content-Type: text/html\n")
+        print(self.htmlFile % (upload_form, message, "", ""))
+
+    def checkImage_page(self):
+        pass
 
     def no_page(self):
         print("Content-Type: text/html\n")
-        print(self.htmlFile % ("The page you requested doesn't exist!", "", ""))
+        print(self.htmlFile % ("The page you requested doesn't exist!", "", "", ""))
 
     def error_page(self, error=""):
         print("Content-Type: text/html\n")
-        print(self.htmlFile % (error, "", ""))
+        print(self.htmlFile % (error, "", "", ""))

@@ -14,7 +14,7 @@ def read_db_config(filename='mysql.conf', section='mysql'):
     :return: a dictionary of database parameters
     """
     # create parser and read configuration file
-    parser = ConfigParser()
+    parser = ConfigParser.ConfigParser()
     parser.read(filename)
 
     # get section, default to mysql

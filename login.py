@@ -7,6 +7,7 @@ __author__ = 'chenbingyu'
 
 import DataManager
 import ViewGenerator
+from DBException import QueryDbError
 import cgitb
 import cgi
 
@@ -14,14 +15,22 @@ cgitb.enable()  # for troubleshooting.
 
 #  Get user name and password.
 form = cgi.FieldStorage()
-username = form.getfirst("name", "")
-password = form.getfirst("password", "")
+username = form.getfirst("name", "").strip(' ')
+password = form.getfirst("password", "").strip(' ')
 
 dataManager = DataManager.DataManager()
 viewGenerator = ViewGenerator.ViewGenerator()
 
-#  Check user's name and password.
-if dataManager.namepass_correct(username, password):
-    viewGenerator.operate_page()
-else:
-    viewGenerator.login_page("Name or password is not correct! Try again or register.")
+
+def check_name_password(name="", pw=""):
+    #  Check user's name and password.
+    try:
+        res = dataManager.namepass_correct(username, password)
+        if res:
+            viewGenerator.operate_page("Welcome "+username)
+        else:
+            viewGenerator.login_page("name or password is not correct.")
+    except QueryDbError:
+        viewGenerator.error_page("An error happened.Sorry for that.")
+
+check_name_password(username,password)

@@ -31,7 +31,7 @@ elif "register" == target_page:
     viewGenerator.register_page()
 
 elif "upload_image" == target_page:
-    viewGenerator.uploadImage()
+    viewGenerator.uploadImage_page()
 
 elif "check_image" == target_page:
     viewGenerator.checkImage()

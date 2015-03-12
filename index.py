@@ -2,6 +2,8 @@
 
 __author__ = 'chenbingyu'
 
+#  Welcome page.
+
 import cgitb
 import SessionManager
 import ViewGenerator

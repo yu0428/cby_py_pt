@@ -8,6 +8,7 @@ import cgi
 import cgitb
 import DataManager
 import ViewGenerator
+from DBException import DuplicateKeyError
 
 cgitb.enable()
 
@@ -26,22 +27,27 @@ def process(username, first_pass, second_pass):
     if "" == username:
         view_generator.register_page("name cannot be empty.")
         return
+
     if "" == first_pass:
         view_generator.register_page("The first password cannot be empty")
         return
+
     if "" == second_pass:
         view_generator.register_page("The second password cannot be empty")
         return
 
-    if data_manager.name_not_exist(username):  # username is not used by others.
-        if first_pass == second_pass:
-            if data_manager.add(username, first_pass):
-                view_generator.error_page("Error happened.Sorry for that.Try again later.")
-                return
-            view_generator.operate_page()
-        else:
-            view_generator.register_page("passwords are not the same.")
+    if first_pass == second_pass:
+        try:
+            data_manager.add(username, first_pass)
+        except DuplicateKeyError as dke:
+            view_generator.register_page(dke.error)
+            return
+        except Exception as e:
+            view_generator.error_page("Some strange error occurred.Sorry for that")
+            return
+        #  Registration is successful.
+        view_generator.operate_page("Welcome "+username)  # Jump to the "operate" page.
     else:
-        view_generator.register_page("name"+username+" is already used.<br>")
+        view_generator.register_page("passwords are not the same.")
 
 process(uname, fpass, spass)
