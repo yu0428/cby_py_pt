@@ -8,6 +8,7 @@ import cgi
 import cgitb
 import DataManager
 import ViewGenerator
+from SessionManager import SessionManager
 from DBException import DuplicateKeyError
 
 cgitb.enable()
@@ -39,14 +40,18 @@ def process(username, first_pass, second_pass):
     if first_pass == second_pass:
         try:
             data_manager.add(username, first_pass)
+            #  Start session
+            session = SessionManager()
+            session_info=session.start_session(username)
+
+            #  Registration is successful.
+            view_generator.operate_page("Welcome "+username, session_info)  # Jump to the "operate" page.
         except DuplicateKeyError as dke:
             view_generator.register_page(dke.error)
             return
         except Exception as e:
             view_generator.error_page("Some strange error occurred.Sorry for that")
             return
-        #  Registration is successful.
-        view_generator.operate_page("Welcome "+username)  # Jump to the "operate" page.
     else:
         view_generator.register_page("passwords are not the same.")
 

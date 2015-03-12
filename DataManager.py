@@ -23,6 +23,9 @@ class DataManager:
         self.dbconf = dbconfparser.read_db_config()
 
     def namepass_correct(self, name="", password=""):
+        #  True:name and password are both correct.
+        #  False:one of them are not correct.
+
         query = "select name from user where name=%s and password = password(%s)"
         args = (name, password+self.hashkey)
         result = False
@@ -35,12 +38,12 @@ class DataManager:
 
             if row is not None:
                 result = True
+            return result
         except Error as e:
                 raise QueryDbError(e.message)
         finally:
             cursor.close()
             conn.close()
-        return result
 
     def add(self, username="", password=""):
         #  register a new user with "username" and "password".
@@ -82,16 +85,45 @@ class DataManager:
 
     def read_image(self, username):
         # select image column of a specific user.
-        query = "SELECT image FROM user WHERE username = %s"
+        query = "SELECT image FROM user WHERE name = %s"
         try:
             # query blob data form the "user" table
             conn = MySQLConnection(**self.dbconf)
             cursor = conn.cursor()
             cursor.execute(query, (username,))
-            image = cursor.fetchone()[0]
-            return image
+            image = cursor.fetchone()
+            if image and image[0]:
+                return image[0]
+
+            #  Read default image.
+            f = open("default.jpeg", 'rb')
+            return f.read()
         except Error as e:
             raise ReadImageError(e.message)
         finally:
             cursor.close()
             conn.close()
+
+    def error_image(self):
+        f = open("error.jpeg", "rb")
+        return f.read()
+
+    def user_exist(self, username):
+        #  If "username" exists,True will be returned.
+        #  Otherwise False.
+        query = "SELECT name FROM user WHERE name = %s"
+        try:
+            conn = MySQLConnection(**self.dbconf)
+            cursor = conn.cursor()
+            cursor.execute(query, (username,))
+            u = cursor.fetchone()
+            if u:  # Not null.
+                return True
+            return False
+        except Error as e:
+            raise QueryDbError(e.message)
+        finally:
+            cursor.close()
+            conn.close()
+
+

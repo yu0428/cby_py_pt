@@ -48,9 +48,11 @@ class ViewGenerator:
         print("Content-Type: text/html\n")
         print(self.htmlFile % (self.login, self.register, "", ""))
 
-    def operate_page(self, message=""):
+    def operate_page(self, message="", cookie=""):
         # Generate a html page containing "Logout","Upload Image" or "Check Image" links.
-        print("Content-Type: text/html\n")
+        print("Content-Type: text/html")
+        print(cookie)
+        print("\n")
         print(self.htmlFile % (message, self.logout, self.uploadImage, self.checkImage))
 
     def login_page(self, message=""):
@@ -103,8 +105,16 @@ class ViewGenerator:
         print("Content-Type: text/html\n")
         print(self.htmlFile % (upload_form, message, "", ""))
 
-    def checkImage_page(self):
-        pass
+    def checkImage_page(self, imagedata):
+        print("Content-Type:image/jpeg\n")
+        print imagedata
+
+    def noimage_page(self):
+        print("Content-Type: text/html\n")
+        print(self.htmlFile %("You need to upload an image first.", "", "", ""))
+
+    def notfound(self):
+        print("Content-Type:text/plain\n")
 
     def no_page(self):
         print("Content-Type: text/html\n")

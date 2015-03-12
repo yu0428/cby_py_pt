@@ -10,6 +10,7 @@ __author__ = 'chenbingyu'
 import cgi
 import cgitb
 import ViewGenerator
+from DataManager import DataManager
 
 cgitb.enable()  # for troubleshooting
 
@@ -34,7 +35,12 @@ elif "upload_image" == target_page:
     viewGenerator.uploadImage_page()
 
 elif "check_image" == target_page:
-    viewGenerator.checkImage()
-
+    dataManager = DataManager()
+    imagedata = dataManager.read_image("test6")
+    if imagedata:
+        viewGenerator.checkImage_page(imagedata)
+    else:
+        #  No image is found.
+        viewGenerator.noimage_page()
 else:
     viewGenerator.no_page()
