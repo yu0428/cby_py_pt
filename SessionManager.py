@@ -15,7 +15,7 @@ class SessionManager:
         return cookie_message
 
     def end_session(self):
-        cookie_meesage="Set-Cookie: reg_fb_gate=deleted; Expires=Thu, 01-Jan-1970 00:00:01 GMT;"
+        cookie_meesage="Set-Cookie: u=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT;"
         return cookie_meesage
 
     def logged(self):
@@ -25,4 +25,9 @@ class SessionManager:
         cookie_string = os.environ.get("HTTP_COOKIE")
 
         if cookie_string:
-            return cookie['u'].value
+            cookie.load(cookie_string)
+            #  return user name.
+            username = cookie['u'].value
+
+            if username != "deleted":
+                return username

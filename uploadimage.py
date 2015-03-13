@@ -6,6 +6,7 @@ import cgi
 import cgitb
 import os
 import ViewGenerator
+from SessionManager import SessionManager
 from DBException import UpdateImageError
 from DataManager import DataManager
 
@@ -24,8 +25,16 @@ if fileitem.filename:
     #  open('files/' + fn, 'wb').write(fileitem.file.read())
     try:
         imagedata = fileitem.file.read()
-        dataManager.store_image("test4", imagedata)
-        viewGenerator.operate_page("The image: "+fileitem.filename+" was uploaded successfully.")
+
+        session = SessionManager()
+        name = session.logged()
+
+        if name:  # User has logged in.
+            dataManager.store_image(name, imagedata)
+            viewGenerator.operate_page("The image: "+fileitem.filename +
+                                       " was uploaded successfully.")
+        else:
+            viewGenerator.welcome_page()
     except UpdateImageError:
         viewGenerator.error_page("An error occurred.Sorry for that.")
 else:

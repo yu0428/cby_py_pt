@@ -46,6 +46,13 @@ class DataManager:
             conn.close()
 
     def add(self, username="", password=""):
+        #  "deleted" will be used by SessionManager to
+        #  delete cookie from user browsers.
+        #  This is not a good solution. A better on
+        #  will be used in the future.
+        if username == "deleted":
+            raise DuplicateKeyError("name:"+username+" is already used.")
+
         #  register a new user with "username" and "password".
         query = "insert user(name,password) values(%s,password(%s))"
         args = (username, password+self.hashkey)

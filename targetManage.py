@@ -10,6 +10,7 @@ __author__ = 'chenbingyu'
 import cgi
 import cgitb
 import ViewGenerator
+from SessionManager import SessionManager
 from DataManager import DataManager
 
 cgitb.enable()  # for troubleshooting
@@ -25,8 +26,12 @@ if "login" == target_page:
     viewGenerator.login_page()
 
 elif "logout" == target_page:
-    #  To do:Delete user's session information.
-    viewGenerator.welcome_page()
+    #  End the session:delete cookie information from the browsers.
+    session = SessionManager()
+    session_info = session.end_session()
+
+    # Jump to welcome page.
+    viewGenerator.welcome_page(session_info)
 
 elif "register" == target_page:
     viewGenerator.register_page()
@@ -36,11 +41,13 @@ elif "upload_image" == target_page:
 
 elif "check_image" == target_page:
     dataManager = DataManager()
-    imagedata = dataManager.read_image("test6")
-    if imagedata:
+
+    session = SessionManager()
+    name = session.logged()
+    if name:  # The user has logged in.
+        imagedata = dataManager.read_image(name)
         viewGenerator.checkImage_page(imagedata)
-    else:
-        #  No image is found.
-        viewGenerator.noimage_page()
+    else:  #  The user needs to log in.
+        viewGenerator.welcome_page()
 else:
     viewGenerator.no_page()

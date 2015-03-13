@@ -34,7 +34,8 @@ def check_name_password(name="", pw=""):
         if res:
             #  Start a session.
             session = SessionManager()
-            session_info = SessionManager.start_session()
+            session_info = session.start_session(username)
+
             viewGenerator.operate_page("Welcome "+username, session_info)
         else:
             viewGenerator.login_page("name or password is not correct.")

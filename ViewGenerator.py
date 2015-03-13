@@ -43,9 +43,11 @@ class ViewGenerator:
             <a href="/cgi-bin/targetManage.py?target_page=logout">Logout</a>
             """
 
-    def welcome_page(self):
+    def welcome_page(self, cookie=""):
         #  Generate a html page containing "Login" or "Register" links.
-        print("Content-Type: text/html\n")
+        print("Content-Type: text/html")
+        print(cookie)
+        print("\n")
         print(self.htmlFile % (self.login, self.register, "", ""))
 
     def operate_page(self, message="", cookie=""):
