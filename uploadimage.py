@@ -4,16 +4,16 @@ __author__ = 'chenbingyu'
 
 import cgi
 import cgitb
-import os
-import ViewGenerator
-from SessionManager import SessionManager
-from DBException import UpdateImageError
-from DataManager import DataManager
+
+from ViewGenerator import ViewGenerator
+from Session.SessionManager import SessionManager
+from DataModel.DBException import UpdateImageError
+from DataModel.DataManager import DataManager
 
 
 cgitb.enable()  #  for troubleshooting
 
-viewGenerator = ViewGenerator.ViewGenerator()
+viewGenerator = ViewGenerator()
 dataManager = DataManager()
 
 form = cgi.FieldStorage()
@@ -35,7 +35,7 @@ if fileitem.filename:
                                        " was uploaded successfully.")
         else:
             viewGenerator.welcome_page()
-    except UpdateImageError:
-        viewGenerator.error_page("An error occurred.Sorry for that.")
+    except UpdateImageError as ue:
+        viewGenerator.error_page("An error occurred.Sorry for that."+ue.error)
 else:
-    viewGenerator.uploadImage("No file was uploaded.")
+    viewGenerator.uploadImage_page("No file was uploaded.")

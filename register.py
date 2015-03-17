@@ -6,10 +6,12 @@ __author__ = 'chenbingyu'
 
 import cgi
 import cgitb
-import DataManager
-import ViewGenerator
-from SessionManager import SessionManager
-from DBException import DuplicateKeyError
+
+from DataModel.DataManager import DataManager
+from ViewGenerator import ViewGenerator
+from Session.SessionManager import SessionManager
+from DataModel.DBException import DuplicateKeyError
+
 
 cgitb.enable()
 
@@ -22,8 +24,8 @@ spass = form.getfirst("second_pass", "").strip(' ')
 
 def process(username, first_pass, second_pass):
 
-    data_manager = DataManager.DataManager()
-    view_generator = ViewGenerator.ViewGenerator()
+    data_manager = DataManager()
+    view_generator = ViewGenerator()
 
     if "" == username:
         view_generator.register_page("name cannot be empty.")

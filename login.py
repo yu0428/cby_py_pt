@@ -5,12 +5,14 @@ __author__ = 'chenbingyu'
 # Handle user's "log in" operation:make sure
 #  the user name exists and the password is correct.
 
-import DataManager
-import ViewGenerator
-from SessionManager import SessionManager
-from DBException import QueryDbError
 import cgitb
 import cgi
+
+from DataModel.DataManager import DataManager
+from ViewGenerator import ViewGenerator
+from Session.SessionManager import SessionManager
+from DataModel.DBException import QueryDbError
+
 
 cgitb.enable()  # for troubleshooting.
 
@@ -19,8 +21,8 @@ form = cgi.FieldStorage()
 username = form.getfirst("name", "").strip(' ')
 password = form.getfirst("password", "").strip(' ')
 
-dataManager = DataManager.DataManager()
-viewGenerator = ViewGenerator.ViewGenerator()
+dataManager = DataManager()
+viewGenerator = ViewGenerator()
 
 
 def check_name_password(name="", pw=""):

@@ -11,7 +11,8 @@ __author__ = 'chenbingyu'
 
 import cgi
 import cgitb
-from DataManager import DataManager
+
+from DataModel.DataManager import DataManager
 from ViewGenerator import ViewGenerator
 
 

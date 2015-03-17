@@ -113,7 +113,7 @@ class ViewGenerator:
 
     def noimage_page(self):
         print("Content-Type: text/html\n")
-        print(self.htmlFile %("You need to upload an image first.", "", "", ""))
+        print(self.htmlFile % ("You need to upload an image first.", "", "", ""))
 
     def notfound(self):
         print("Content-Type:text/plain\n")

@@ -5,17 +5,20 @@ __author__ = 'chenbingyu'
 #  Welcome page.
 
 import cgitb
-import SessionManager
-import ViewGenerator
+
+from Session.SessionManager import SessionManager
+from ViewGenerator import ViewGenerator
+
 
 cgitb.enable()  # for troubleshooting
 
-sessionManager = SessionManager.SessionManager()
-viewGenerator = ViewGenerator.ViewGenerator()
+sessionManager = SessionManager()
+viewGenerator = ViewGenerator()
 
-if sessionManager.logged():
+user = sessionManager.logged()
+if user:
     #  Generate an operate page for logged users.
-    viewGenerator.operate_page()
+    viewGenerator.operate_page("Welcome "+user)
 else:
     # Generate a welcome page for new users.
     viewGenerator.welcome_page()

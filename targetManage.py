@@ -9,13 +9,15 @@ __author__ = 'chenbingyu'
 
 import cgi
 import cgitb
-import ViewGenerator
-from SessionManager import SessionManager
-from DataManager import DataManager
+
+from ViewGenerator import ViewGenerator
+from Session.SessionManager import SessionManager
+from DataModel.DataManager import DataManager
+
 
 cgitb.enable()  # for troubleshooting
 
-viewGenerator = ViewGenerator.ViewGenerator()
+viewGenerator = ViewGenerator()
 
 query_parameters = cgi.FieldStorage()
 #  Get the "target_page" parameter.
