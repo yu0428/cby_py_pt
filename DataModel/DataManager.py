@@ -85,7 +85,7 @@ class DataManager:
             cursor.execute(query, args)
             conn.commit()
         except Error as e:
-            raise UpdateImageError(e.message)
+            raise UpdateImageError(e.msg)
         finally:
             cursor.close()
             conn.close()

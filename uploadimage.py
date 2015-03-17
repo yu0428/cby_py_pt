@@ -26,16 +26,20 @@ if fileitem.filename:
     try:
         imagedata = fileitem.file.read()
 
-        session = SessionManager()
-        name = session.logged()
-
-        if name:  # User has logged in.
-            dataManager.store_image(name, imagedata)
-            viewGenerator.operate_page("The image: "+fileitem.filename +
-                                       " was uploaded successfully.")
+        if len(imagedata) > 5242880:
+            viewGenerator.operate_page("The image is too large."
+                                       "It should be less than 5MB")
         else:
-            viewGenerator.welcome_page()
+            session = SessionManager()
+            name = session.logged()
+
+            if name:  # User has logged in.
+                dataManager.store_image(name, imagedata)
+                viewGenerator.operate_page("The image: "+fileitem.filename +
+                                       " was uploaded successfully.")
+            else:
+                viewGenerator.welcome_page()
     except UpdateImageError as ue:
-        viewGenerator.error_page("An error occurred.Sorry for that."+ue.error)
+        viewGenerator.error_page("An error occurred.Sorry for that.")
 else:
     viewGenerator.uploadImage_page("No file was uploaded.")

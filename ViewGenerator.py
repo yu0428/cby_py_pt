@@ -95,7 +95,7 @@ class ViewGenerator:
         upload_form = """
             <form action="/cgi-bin/uploadimage.py" method="post"
                 enctype="multipart/form-data" name="upload_form">
-                <label>Upload an image(.jpeg for now).</label>
+                <label>Upload an image(.jpeg for now,less than 5MB).</label>
                 <br/>
                 <input name="imgfile" type="file" accept="image/jpeg"/>
                 <br/>
