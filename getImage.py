@@ -4,7 +4,7 @@ __author__ = 'chenbingyu'
 
 # This script is the API,which anyone can use to
 #  get an Image of an specific user.For example,
-#  url:/cgi-bin/getImage.py?u=user1,will send back a
+#  url:/cgi-bin/getimage.py?u=user1,will send back a
 #  response containing  the image of user "user1".
 #  If there is no image for "user1",a default image will be sent back.
 #  If "user1" don't exist,an "error" image will be sent
