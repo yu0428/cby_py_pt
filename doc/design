@@ -4,7 +4,7 @@ DataModel负责数据存储。DataManager.py提供数据存储接口，dbconfpar
 
 ViewGenerator.py负责生成用户界面。包括首页、登录页面、注册页面、上传图像页面、查看图像页面。
 
-Controller部分主要由：getImage.py、index.py、login.py（处理登录逻辑）、
+Controller部分主要由：getimage.py、index.py、login.py（处理登录逻辑）、
 register.py（处理注册逻辑）、targetManage.py和uploadimage.py（处理图像上传逻辑）构成。
 
 
