@@ -1,15 +1,33 @@
-整体设计：
+1，整体设计采用MVC模式：
+DataModel负责数据存储。DataManager.py提供数据存储接口，dbconfparser.py从./conf/mysql.conf
+读取配置信息，DBException.py定义主要的数据读写操作异常。
+
+ViewGenerator.py负责生成用户界面。包括首页、登录页面、注册页面、上传图像页面、查看图像页面。
+
+Controller部分主要由：getImage.py、index.py、login.py（处理登录逻辑）、
+register.py（处理注册逻辑）、targetManage.py和uploadimage.py（处理图像上传逻辑）构成。
 
 
+2，会话(Session)机制
+Seeion包下的SessionManager.py提供了会话管理接口。
 
+会话（Session）是通过Cookie机制实现的。用户登录时，将"Set-Cookie: u=当前用户名"信息发送到浏览器，后续操作
+根据浏览器返回的“Cookie:u=当前用户名”进行数据操作。当用户退出时，服务器发送“Set-Cookie:u=deleted;
+expires=Thu, 01-Jan-1970 00:00:01 GMT;”到浏览器，提示浏览器删除当前用户Cookie信息。
 
-cookie中包括session id
-session id为登录时的系统时间
+3，数据库表
+assgiment_pingtai.sql保存了数据库定义语句。
+虽然图片信息的存储使用了longblob类型（最大可以存储4G），但是程序会限制图片大小不超过5MB。
 
+4，默认图片与出错图片
+已经注册，但是没有上传自己图像的用户，默认使用images/default.jpeg。
+访问没有注册的用户的图像，将看到images/error.jpeg。
 
-mysql-connector-python-2.0.3
+5，图片访问接口
+如下URL是外部程序访问“test12”用户图像的接口：
+http://localhost/cgi-bin/getimage.py?u=test12
 
-存在的问题：密码明文传输。
-DataManager:
-    用户名的存在与否的判断逻辑需要修改。
-SessionManager:单例模式
+6，遗留问题
+用户注册与登录时，密码明文传输。
+用户名直接存储在Cookie中，Seesion机制过于简单。
+这两部分都存在安全问题，需要后续加密解决。
