@@ -2,7 +2,7 @@
 
 __author__ = 'chenbingyu'
 
-#  Generate the corresponding page according to the "target_page"
+# Generate the corresponding page according to the "target_page"
 #  parameter in the query string.
 #  For example,the url,/cgi-bin/targetManage.py?target_page=login,
 #  will make targetManage.py generate a login page.
@@ -39,7 +39,7 @@ elif "register" == target_page:
     viewGenerator.register_page()
 
 elif "upload_image" == target_page:
-    viewGenerator.uploadImage_page()
+    viewGenerator.uploadimage_page()
 
 elif "check_image" == target_page:
     dataManager = DataManager()
@@ -48,8 +48,8 @@ elif "check_image" == target_page:
     name = session.logged()
     if name:  # The user has logged in.
         imagedata = dataManager.read_image(name)
-        viewGenerator.checkImage_page(imagedata)
-    else:  #  The user needs to log in.
+        viewGenerator.checkimage_page(imagedata)
+    else:  # The user needs to log in.
         viewGenerator.welcome_page()
 else:
     viewGenerator.no_page()

@@ -2,8 +2,9 @@
 
 __author__ = 'chenbingyu'
 
-#  Class ViewGenerator responsible for generating "login","register",
+# Class ViewGenerator responsible for generating "login","register",
 #  "Upload Image","Check Image" and so on pages.
+
 
 class ViewGenerator:
     # Response for generating user interface files(html file).
@@ -91,7 +92,7 @@ class ViewGenerator:
         print("Content-Type: text/html\n")
         print(self.htmlFile % (register_form, message, "", ""))
 
-    def uploadImage_page(self, message=""):
+    def uploadimage_page(self, message=""):
         upload_form = """
             <form action="/cgi-bin/uploadimage.py" method="post"
                 enctype="multipart/form-data" name="upload_form">
@@ -107,7 +108,8 @@ class ViewGenerator:
         print("Content-Type: text/html\n")
         print(self.htmlFile % (upload_form, message, "", ""))
 
-    def checkImage_page(self, imagedata):
+    @staticmethod
+    def checkimage_page(imagedata):
         print("Content-Type:image/jpeg\n")
         print imagedata
 
@@ -115,7 +117,8 @@ class ViewGenerator:
         print("Content-Type: text/html\n")
         print(self.htmlFile % ("You need to upload an image first.", "", "", ""))
 
-    def notfound(self):
+    @staticmethod
+    def notfound():
         print("Content-Type:text/plain\n")
 
     def no_page(self):

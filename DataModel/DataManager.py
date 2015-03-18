@@ -29,6 +29,10 @@ class DataManager:
         query = "select name from user where name=%s and password = password(%s)"
         args = (name, password+self.hashkey)
         result = False
+
+        cursor = None
+        conn = None
+
         try:
             conn = MySQLConnection(**self.dbconf)
             cursor = conn.cursor()
@@ -42,8 +46,10 @@ class DataManager:
         except Error as e:
                 raise QueryDbError(e.message)
         finally:
-            cursor.close()
-            conn.close()
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
 
     def add(self, username="", password=""):
         #  "deleted" will be used by SessionManager to
@@ -57,6 +63,9 @@ class DataManager:
         query = "insert user(name,password) values(%s,password(%s))"
         args = (username, password+self.hashkey)
 
+        conn = None
+        cursor = None
+
         try:
             conn = MySQLConnection(**self.dbconf)
             cursor = conn.cursor()
@@ -69,8 +78,10 @@ class DataManager:
             else:
                 raise Exception(error.message)
         finally:
-            cursor.close()
-            conn.close()
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
 
     def store_image(self, name, imagedata):
 
@@ -79,6 +90,10 @@ class DataManager:
                 "set image = %s " \
                 "where name  = %s"
         args = (imagedata, name)
+
+        conn = None
+        cursor = None
+
         try:
             conn = MySQLConnection(**self.dbconf)
             cursor = conn.cursor()
@@ -87,12 +102,18 @@ class DataManager:
         except Error as e:
             raise UpdateImageError(e.msg)
         finally:
-            cursor.close()
-            conn.close()
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
 
     def read_image(self, username):
         # select image column of a specific user.
         query = "SELECT image FROM user WHERE name = %s"
+
+        conn = None
+        cursor = None
+
         try:
             # query blob data form the "user" table
             conn = MySQLConnection(**self.dbconf)
@@ -108,10 +129,13 @@ class DataManager:
         except Error as e:
             raise ReadImageError(e.message)
         finally:
-            cursor.close()
-            conn.close()
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
 
-    def error_image(self):
+    @staticmethod
+    def error_image():
         f = open("./images/error.jpeg", "rb")
         return f.read()
 
@@ -119,6 +143,8 @@ class DataManager:
         #  If "username" exists,True will be returned.
         #  Otherwise False.
         query = "SELECT name FROM user WHERE name = %s"
+        conn = None
+        cursor = None
         try:
             conn = MySQLConnection(**self.dbconf)
             cursor = conn.cursor()
@@ -130,7 +156,9 @@ class DataManager:
         except Error as e:
             raise QueryDbError(e.message)
         finally:
-            cursor.close()
-            conn.close()
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
 
 

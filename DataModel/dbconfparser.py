@@ -2,10 +2,11 @@
 
 __author__ = 'chenbingyu'
 
-#  Read mysql database configuration information
+# Read mysql database configuration information
 #  from "mysql.conf"
 
 import ConfigParser
+
 
 def read_db_config(filename='./conf/mysql.conf', section='mysql'):
     """ Read database configuration file and return a dictionary object

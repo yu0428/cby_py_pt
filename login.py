@@ -3,7 +3,7 @@
 __author__ = 'chenbingyu'
 
 # Handle user's "log in" operation:make sure
-#  the user name exists and the password is correct.
+# the user name exists and the password is correct.
 
 import cgitb
 import cgi
@@ -38,10 +38,11 @@ def check_name_password(name="", pw=""):
             session = SessionManager()
             session_info = session.start_session(username)
 
-            viewGenerator.operate_page("Welcome "+username, session_info)
+            viewGenerator.operate_page("Welcome " + username, session_info)
         else:
             viewGenerator.login_page("name or password is not correct.")
     except QueryDbError:
         viewGenerator.error_page("An error happened.Sorry for that.")
 
-check_name_password(username,password)
+
+check_name_password(username, password)
